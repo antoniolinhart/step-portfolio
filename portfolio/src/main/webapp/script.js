@@ -17,18 +17,18 @@
  * @returns {string} A color in HSL (hue, saturation, lightness) format
  */
 function generateRandomColor() {
-    const randomHue = Math.random() * 360; // max value 360
-    const saturation =  (Math.random() * 40) + 40 // max value 100
-    const lightness = (Math.random() * 30) + 60; // max value 100
+  const randomHue = Math.random() * 360; // max value 360
+  const saturation =  (Math.random() * 40) + 40 // max value 100
+  const lightness = (Math.random() * 30) + 60; // max value 100
 
-    const randomHsl = `hsl(${randomHue}, ${saturation}%, ${lightness}%)`
-    return randomHsl;
- }
+  const randomHsl = `hsl(${randomHue}, ${saturation}%, ${lightness}%)`
+  return randomHsl;
+}
 
  /**
   * Changes the background of the page to be a random color.
   */
 function setRandomBackgroundColor() {
-    const bodyContainer = document.getElementById('main-body');
-    bodyContainer.style.backgroundColor = generateRandomColor();
+  const bodyContainer = document.getElementById('main-body');
+  bodyContainer.style.backgroundColor = generateRandomColor();
 }
