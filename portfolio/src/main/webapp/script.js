@@ -13,16 +13,33 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Generates a random color.
+ * @returns {string} A color in HSL (hue, saturation, lightness) format
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function generateRandomColor() {
+  const randomHue = Math.floor(Math.random() * 360); // max value 360
+  const saturation =  Math.floor(Math.random() * 40) + 40 // max value 100
+  const lightness = Math.floor(Math.random() * 30) + 60; // max value 100
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const randomHsl = `hsl(${randomHue}, ${saturation}%, ${lightness}%)`
+  return randomHsl;
 }
+
+ /**
+  * Changes the background of the page to be a random color.
+  */
+function setRandomBackgroundColor() {
+  const bodyContainer = document.getElementById('main-body');
+  bodyContainer.style.backgroundColor = generateRandomColor();
+}
+
+/**
+ * Initializes webpage.
+ */
+function init() {
+  document.getElementById("background-button").addEventListener("click", function() {
+    setRandomBackgroundColor();
+  });
+}
+
+init();
