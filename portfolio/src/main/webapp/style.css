@@ -13,6 +13,42 @@
   font-weight: bold;
 }
 
+#skills {
+  margin-top: 100px;
+}
+
+.skill-section-header {
+  font-size: 1.5em;
+}
+
+.skill-section-list {
+  list-style: none;
+  display: flex;
+  padding-left: 0px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.skill-section-list li {
+  border-radius: 150px 25px 150px 25px;
+  -moz-border-radius: 150px 25px 150px 25px;
+  -webkit-border-radius: 150px 25px 150px 25px;
+  border: 2px solid black;
+  background-color: lightgray;
+
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 4px;
+  
+  font-size: 1.5em;
+  font-family: "Courier New", Courier, monospace;
+}
+
 @media only screen and (max-width: 699px) {
   p {
     font-size: 16px;
