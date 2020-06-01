@@ -12,7 +12,7 @@
 }
 
 .navbar {
-  border-radius: 0 !important;
+  border-radius: 0;
 }
 
 .navbar-nav {
@@ -20,7 +20,7 @@
 }
 
 .nav-text {
-  font-size: 1.5em !important;
+  font-size: 1.5em;
 }
 
 a {
