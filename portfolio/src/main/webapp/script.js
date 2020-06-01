@@ -34,12 +34,20 @@ function setRandomBackgroundColor() {
 }
 
 /**
+ * Call doGet to get content from the DataServlet.
+ */
+async function getComment() {
+  const response = await fetch('/data');
+  const comment = await response.text();
+  document.getElementById('comment-container').innerHTML = comment;
+}
+
+/**
  * Initializes webpage.
  */
 function init() {
-  document.getElementById("background-button").addEventListener("click", function() {
-    setRandomBackgroundColor();
-  });
+  document.getElementById("background-button").addEventListener("click", setRandomBackgroundColor);
+  document.getElementById("comment-button").addEventListener("click", getComment);
 }
 
 init();
