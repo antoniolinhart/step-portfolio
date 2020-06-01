@@ -1,7 +1,6 @@
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 700px;
 }
 
 .font {
@@ -11,6 +10,30 @@
 .text-emphasis {
   font-weight: bold;
 }
+
+.navbar {
+  border-radius: 0;
+}
+
+.navbar-nav {
+  margin-right: 20px;
+}
+
+.nav-text {
+  font-size: 1.5em;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 
 #skills {
   margin-top: 100px;
@@ -44,20 +67,14 @@
   p {
     font-size: 16px;
   }
-
-  img {
-    max-width: 50%;
-    height: auto;
-  }
 }
 
 @media only screen and (min-width: 700px) {
+  #content {
+    width: 700px;
+  }
+
   p {
     font-size: 20px;
-  }
-  
-  img {
-    max-width: 100%;
-    height: auto;
   }
 }
