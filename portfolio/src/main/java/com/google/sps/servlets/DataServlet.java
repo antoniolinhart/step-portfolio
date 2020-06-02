@@ -50,7 +50,7 @@ public class DataServlet extends HttpServlet {
   }
 
   /**
-   * Converts a ServerStats instance into a JSON string using the Gson library.
+   * Converts an ArrayList of Strings into a JSON string using the Gson library.
    */
   private String convertToJson(ArrayList<String> data) {
     Gson gson = new Gson();
