@@ -165,15 +165,13 @@
       </div>
       <div id="comments">
         <form action="/data" method="POST">
-          <p>Enter a comment:</p>
-          <textarea name="text-input"></textarea>
-          <br/><br/>
-          <input type="submit" />
-          <br/><br/>
+          <label for="text-input">Enter a comment:</label>
+          <textarea id="text-input" name="text-input"></textarea>
+          <input class="btn-display" type="submit">
         </form>
         <div id="comment-container">
         </div>
-        <button type="button" id="comment-button" class="btn-primary btn-md">Fetch comments</button>
+        <button type="button" id="comment-button" class="btn-primary btn-md btn-display">Fetch comments</button>
       </div>
     </div>
   </body>
