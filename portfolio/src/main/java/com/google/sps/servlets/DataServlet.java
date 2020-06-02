@@ -26,22 +26,26 @@ import java.util.Arrays;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+  // A list containing the comments submitted by the users
+  ArrayList<String> comments = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArrayList<String> data = createArrayList();
-    String json = convertToJson(data);
+    String json = convertToJson(comments);
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
-  /**
-   * Creates an ArrayList with example data.
-   * @return an ArrayList of strings with hardcoded data.
-   */
-  private static ArrayList<String> createArrayList() {
-    return new ArrayList<String>(Arrays.asList("Apple", "Banana", "Clementine"));
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form
+    String userComment = request.getParameter("text-input");
+
+    comments.add(userComment);
+
+    // Redirect back to the HTML page.
+    response.sendRedirect("/index.html");
   }
 
   /**
