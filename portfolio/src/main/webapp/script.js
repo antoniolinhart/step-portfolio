@@ -43,11 +43,41 @@ async function getComment() {
 }
 
 /**
+ * Fetches comments from the server and adds them to the DOM.
+ */
+async function loadComments() {
+  const response = await fetch('/list-comments');
+  const comments = await response.json();
+  const commentListElement = document.getElementById('comment-container');
+  
+  comments.forEach((comment) => {
+    commentListElement.appendChild(createCommentElement(comment));
+    //commentListElement.innerText += comment;
+  })
+}
+
+/** Creates an element that represents a Comment. */
+function createCommentElement(comment) {
+  const totalCommentElement = document.createElement('li');
+  totalCommentElement.className = 'comment';
+
+  const authorElement = document.createElement('span');
+  authorElement.innerText = comment.authorName;
+
+  const commentTextElement = document.createElement('p');
+  commentTextElement.innerText = comment.commentText;
+
+  totalCommentElement.appendChild(authorElement);
+  totalCommentElement.appendChild(commentTextElement);
+  return totalCommentElement;
+}
+
+/**
  * Initializes webpage.
  */
 function init() {
   document.getElementById("background-button").addEventListener("click", setRandomBackgroundColor);
-  document.getElementById("comment-button").addEventListener("click", getComment);
+  document.getElementById("comment-button").addEventListener("click", loadComments);
 }
 
 init();

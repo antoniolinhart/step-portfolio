@@ -164,9 +164,11 @@
         </div>
       </div>
       <div id="comments">
-        <form action="/data" method="POST">
+        <form action="/new-comment" method="POST">
+          <label for="author-input">Enter your name:</label>
+          <textarea id="author-input" name="author-input" required></textarea>
           <label for="text-input">Enter a comment:</label>
-          <textarea id="text-input" name="text-input"></textarea>
+          <textarea id="text-input" name="text-input" required></textarea>
           <input class="btn-display" type="submit">
         </form>
         <div id="comment-container">
