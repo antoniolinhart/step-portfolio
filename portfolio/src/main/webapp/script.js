@@ -38,7 +38,7 @@ function setRandomBackgroundColor() {
  */
 async function getComment() {
   const response = await fetch('/data');
-  const comment = await response.text();
+  const comment = await response.json();
   document.getElementById('comment-container').innerHTML = comment;
 }
 
