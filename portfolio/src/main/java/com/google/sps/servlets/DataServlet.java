@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Arrays; 
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -39,14 +40,8 @@ public class DataServlet extends HttpServlet {
    * Creates an ArrayList with example data.
    * @return an ArrayList of strings with hardcoded data.
    */
-  public static ArrayList<String> createArrayList() {
-    ArrayList<String> exampleData = new ArrayList<String>();
-
-    exampleData.add("Apple");
-    exampleData.add("Banana");
-    exampleData.add("Clementine");
-
-    return exampleData;
+  private static ArrayList<String> createArrayList() {
+    return new ArrayList<String>(Arrays.asList("Apple", "Banana", "Clementine"));
   }
 
   /**
