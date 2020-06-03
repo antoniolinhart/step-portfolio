@@ -146,6 +146,10 @@ img {
   padding: 5px 15px;
 }
 
+#num-comments {
+  display: block;
+}
+
 .comment-list > li > span {
   color: darkgray;
   padding-left: 25px;

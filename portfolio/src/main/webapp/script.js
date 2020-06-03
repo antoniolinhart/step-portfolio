@@ -83,7 +83,8 @@ function createCommentElement(comment) {
  */
 function init() {
   document.getElementById("background-button").addEventListener("click", setRandomBackgroundColor);
-  document.getElementById("comment-button").addEventListener("click", loadComments);
+  document.getElementById("num-comments").onload = loadComments();
+  document.getElementById("num-comments").setAttribute("onChange", "loadComments()");
 }
 
 init();
