@@ -10,6 +10,7 @@
 .btn-display {
   display: block;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .text-emphasis {
@@ -118,6 +119,36 @@ img {
   padding: 4px 16px 0px 16px;
   font-size: 1.5em;
   font-family: "Courier New", Courier, monospace;
+}
+
+#comments {
+  margin-top: 100px;
+}
+
+.comment-list {
+  display: block;
+  list-style-type: none;
+  margin-left: 25%;
+  margin-right: 25%;
+  padding-left: 0px;
+  width: auto;
+}
+
+.comment-list > li > p {
+  background: #0275d8;
+  border-radius: 25px;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  color: white;
+  flex-wrap: wrap;
+  margin: 5px 0px;
+  max-width: 350px;
+  padding: 5px 15px;
+}
+
+.comment-list > li > span {
+  color: darkgray;
+  padding-left: 25px;
 }
 
 @media only screen and (max-width: 699px) {

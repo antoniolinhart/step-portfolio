@@ -48,21 +48,27 @@ async function getComment() {
 async function loadComments() {
   const response = await fetch('/list-comments');
   const comments = await response.json();
-  const commentListElement = document.getElementById('comment-container');
+  const commentContainerElement = document.getElementById('comment-container');
+  const listElement = document.createElement('ul');
+  listElement.className = 'comment-list';
   
   comments.forEach((comment) => {
-    commentListElement.appendChild(createCommentElement(comment));
-    //commentListElement.innerText += comment;
+    listElement.appendChild(createCommentElement(comment));
   })
+  // Clear comments after each retrieval and replace with new
+  commentContainerElement.innerHTML = '';
+  commentContainerElement.appendChild(listElement);
 }
 
-/** Creates an element that represents a Comment. */
+/**
+ * Creates an element that represents a Comment.
+ */
 function createCommentElement(comment) {
   const totalCommentElement = document.createElement('li');
-  totalCommentElement.className = 'comment';
 
   const authorElement = document.createElement('span');
   authorElement.innerText = comment.authorName;
+  authorElement.className = 'text-emphasis'
 
   const commentTextElement = document.createElement('p');
   commentTextElement.innerText = comment.commentText;
