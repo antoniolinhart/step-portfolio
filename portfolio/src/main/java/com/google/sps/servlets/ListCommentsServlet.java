@@ -64,7 +64,7 @@ public class ListCommentsServlet extends HttpServlet {
   /**
    * Convert a string into a integer. If not a natural number,
    * return 0 with an error message.
-   * @param A string that will be parsed into a natural number
+   * @param stringNum A string that will be parsed into a natural number
    * @return The number as an int, 0 if input is invalid
    */
   private static int parseNaturalNumber(String stringNum) {
