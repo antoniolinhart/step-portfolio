@@ -43,11 +43,47 @@ async function getComment() {
 }
 
 /**
+ * Fetches comments from the server and adds them to the DOM.
+ */
+async function loadComments() {
+  const response = await fetch('/list-comments');
+  const comments = await response.json();
+  const commentContainerElement = document.getElementById('comment-container');
+  const listElement = document.createElement('ul');
+  listElement.className = 'comment-list';
+  
+  comments.forEach((comment) => {
+    listElement.appendChild(createCommentElement(comment));
+  })
+  // Clear comments after each retrieval and replace with new
+  commentContainerElement.innerHTML = '';
+  commentContainerElement.appendChild(listElement);
+}
+
+/**
+ * Creates an element that represents a Comment.
+ */
+function createCommentElement(comment) {
+  const totalCommentElement = document.createElement('li');
+
+  const authorElement = document.createElement('span');
+  authorElement.innerText = comment.authorName;
+  authorElement.className = 'text-emphasis'
+
+  const commentTextElement = document.createElement('p');
+  commentTextElement.innerText = comment.commentText;
+
+  totalCommentElement.appendChild(authorElement);
+  totalCommentElement.appendChild(commentTextElement);
+  return totalCommentElement;
+}
+
+/**
  * Initializes webpage.
  */
 function init() {
   document.getElementById("background-button").addEventListener("click", setRandomBackgroundColor);
-  document.getElementById("comment-button").addEventListener("click", getComment);
+  document.getElementById("comment-button").addEventListener("click", loadComments);
 }
 
 init();
