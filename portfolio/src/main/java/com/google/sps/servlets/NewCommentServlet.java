@@ -31,7 +31,7 @@ public class NewCommentServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String author = request.getParameter("author-input").trim();
     // replace author name if empty
-    if(author.length() == 0) author = "Anonymous User";
+    if (author.length() == 0) author = "Anonymous User";
 
     String userComment = request.getParameter("text-input").trim();
     long timestamp = System.currentTimeMillis();
