@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -40,9 +41,11 @@ public class ListCommentsServlet extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
+    int numComments = parseNaturalNumber(request.getParameter("numComments"));
 
+    List<Entity> entities = results.asList(FetchOptions.Builder.withLimit(numComments));
     List<Comment> comments = new ArrayList<>();
-    for (Entity entity : results.asIterable()) {
+    for (Entity entity : entities) {
       long id = entity.getKey().getId();
       String authorName = (String) entity.getProperty("authorName");
       String commentText = (String) entity.getProperty("commentText");
@@ -56,5 +59,29 @@ public class ListCommentsServlet extends HttpServlet {
 
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(comments));
+  }
+
+  /**
+   * Convert a string into a integer. If not a natural number,
+   * return 0 with an error message.
+   * @param A string that will be parsed into a natural number
+   * @return The number as an int, 0 if input is invalid
+   */
+  private static int parseNaturalNumber(String stringNum) {
+    int num = 0;
+
+    try {
+      num = Integer.parseInt(stringNum);
+    } catch (NumberFormatException e) {
+      System.err.println("Did not input a valid integer in String form.");
+      System.err.println(e);
+    }
+
+    if (num < 0) {
+      System.err.println("Incorrectly input a negative number, which is not a natural number.");
+      num = 0;
+    }
+
+    return num;
   }
 }
