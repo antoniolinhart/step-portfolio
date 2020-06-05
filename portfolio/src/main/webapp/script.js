@@ -46,7 +46,9 @@ async function getComment() {
  * Fetches comments from the server and adds them to the DOM.
  */
 async function loadComments() {
-  const response = await fetch('/list-comments');
+  const numComments = document.getElementById("num-comments").value;
+
+  const response = await fetch(`/list-comments?numComments=${numComments}`);
   const comments = await response.json();
   const commentContainerElement = document.getElementById('comment-container');
   const listElement = document.createElement('ul');
@@ -83,7 +85,8 @@ function createCommentElement(comment) {
  */
 function init() {
   document.getElementById("background-button").addEventListener("click", setRandomBackgroundColor);
-  document.getElementById("comment-button").addEventListener("click", loadComments);
+  document.getElementById("num-comments").onload = loadComments();
+  document.getElementById("num-comments").setAttribute("onChange", "loadComments()");
 }
 
 init();
