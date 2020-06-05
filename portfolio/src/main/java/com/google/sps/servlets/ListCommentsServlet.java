@@ -43,7 +43,13 @@ public class ListCommentsServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
     int numComments = parseNaturalNumber(request.getParameter("numComments"));
 
-    List<Entity> entities = results.asList(FetchOptions.Builder.withLimit(numComments));
+    Iterable<Entity> entities;
+    if (numComments == -1) {
+      entities = results.asIterable();
+    } else {
+      entities = results.asList(FetchOptions.Builder.withLimit(numComments));
+    }
+
     List<Comment> comments = new ArrayList<>();
     for (Entity entity : entities) {
       long id = entity.getKey().getId();
@@ -62,10 +68,10 @@ public class ListCommentsServlet extends HttpServlet {
   }
 
   /**
-   * Convert a string into a integer. If not a natural number,
-   * return 0 with an error message.
+   * Convert a string into an integer. If not a natural number,
+   * return -1 with an error message.
    * @param stringNum A string that will be parsed into a natural number
-   * @return The number as an int, 0 if input is invalid
+   * @return The number as an int, -1 if input is invalid
    */
   private static int parseNaturalNumber(String stringNum) {
     int num = 0;
@@ -73,13 +79,13 @@ public class ListCommentsServlet extends HttpServlet {
     try {
       num = Integer.parseInt(stringNum);
     } catch (NumberFormatException e) {
-      System.err.println("Did not input a valid integer in String form.");
-      System.err.println(e);
+      System.err.println("Did not input a valid integer in String form." + e);
+      return -1;
     }
 
     if (num < 0) {
       System.err.println("Incorrectly input a negative number, which is not a natural number.");
-      num = 0;
+      return -1;
     }
 
     return num;
