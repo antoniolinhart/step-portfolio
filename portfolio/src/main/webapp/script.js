@@ -63,7 +63,7 @@ async function loadComments() {
   commentContainerElement.appendChild(listElement);
   deleteButtonContainer.innerHTML = '';
 
-  // If there are comments beoing displayed on the page, add a button for delete
+  // If there are comments being displayed on the page, add a delete button
   if (comments.length > 0) {
     let deleteButton = document.createElement('button');
     deleteButton.onclick = deleteAllComments;
