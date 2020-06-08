@@ -146,6 +146,11 @@ img {
   padding: 5px 15px;
 }
 
+#delete-comment-btn {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
 #num-comments {
   display: block;
 }

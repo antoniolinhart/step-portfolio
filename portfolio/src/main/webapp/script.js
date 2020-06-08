@@ -47,6 +47,7 @@ async function getComment() {
  */
 async function loadComments() {
   const numComments = document.getElementById("num-comments").value;
+  const deleteButtonContainer = document.getElementById("delete-comment-btn");
 
   const response = await fetch(`/list-comments?numComments=${numComments}`);
   const comments = await response.json();
@@ -60,7 +61,24 @@ async function loadComments() {
   // Clear comments after each retrieval and replace with new
   commentContainerElement.innerHTML = '';
   commentContainerElement.appendChild(listElement);
+  deleteButtonContainer.innerHTML = '';
+
+  // If there are comments being displayed on the page, add a delete button
+  if (comments.length > 0) {
+    let deleteButton = document.createElement('button');
+    deleteButton.onclick = deleteAllComments;
+    deleteButton.innerText = "Delete Every Comment";
+    deleteButtonContainer.appendChild(deleteButton); 
+  }
 }
+
+/**
+ * Makes a POST request to delete all comments.
+ */
+ function deleteAllComments() {
+   fetch('/delete-comments', {method: 'POST'});
+   window.location.reload();
+ }
 
 /**
  * Creates an element that represents a Comment.
