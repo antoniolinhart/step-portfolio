@@ -83,6 +83,3 @@ public final class DairyYear {
   }
   
 }
-
-
-
