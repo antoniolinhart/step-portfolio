@@ -18,9 +18,10 @@ async function drawDairyChart() {
   let options = createChartsOptions();
 
   let properties = {
-    title: 'Dairy Consumption (millions of pounds)',
+    title: 'Dairy Consumption',
     vAxis: { 
-      format: 'decimal'
+      format: 'decimal',
+      title: 'Consumption (millions of pounds)'
     }
   };
   // Add all custom properties to the options object
@@ -39,6 +40,7 @@ async function drawRelativeDairyChart() {
     title: 'Year-Over-Year Dairy Growth',
     vAxis: { 
       format: 'percent',
+      title: 'Percentage Change',
       viewWindow: {
         max: 0.35,
         min: -0.35
@@ -86,6 +88,7 @@ function createChartsOptions() {
     height: 400,
     hAxis: { 
       format: '####',
+      title: 'Year',
       viewWindow: {
         max: 2018,
         min: 1975
@@ -106,12 +109,13 @@ async function fetchDairyData() {
  * Initializes dairy analytics webpage.
  */
 function init() {
-  fetchDairyData();
-  
-
   google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawDairyChart);
-  google.charts.setOnLoadCallback(drawRelativeDairyChart);
+
+  fetchDairyData()
+    .then(() => { 
+      google.charts.setOnLoadCallback(drawDairyChart);
+      google.charts.setOnLoadCallback(drawRelativeDairyChart);
+    });
 }
 
 let dairyData;
