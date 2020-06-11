@@ -19,6 +19,8 @@ import com.google.sps.data.DairyYear;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -110,7 +112,7 @@ public class MilkDataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
     Gson gson = new Gson();
-    HashMap<String, ArrayList<DairyYear>> dairyData = new HashMap<String, ArrayList<DairyYear>>();
+    Map<String, List<DairyYear>> dairyData = new HashMap<>();
     dairyData.put("consumption", milkConsumption);
     dairyData.put("relativeConsumption", relativeMilkConsumption);
     

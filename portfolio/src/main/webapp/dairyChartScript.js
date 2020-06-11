@@ -12,31 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Fetches yearly dairy consumption data and uses it to create a chart. */
-async function drawDairyChart() {
-  const data = createChartDataFromDataset('consumption');
+/** Fetches data and uses it to create a chart depending on the dataset, properties and div name. */
+async function drawChart(datasetName, properties, divName) {
+  const data = createChartDataFromDataset(datasetName);
   let options = createChartsOptions();
 
-  let properties = {
+  // merge custom properties with original options
+  const modifiedOptions = { ...options, ...properties };
+
+  const chart = new google.visualization.LineChart(document.getElementById(divName)); 
+  chart.draw(data, modifiedOptions);
+}
+
+/** Creates both dairy charts with specified properties and names. */
+async function createBothDairyCharts() {
+  let consumptionProperties = {
     title: 'Dairy Consumption',
     vAxis: { 
       format: 'decimal',
       title: 'Consumption (millions of pounds)'
     }
   };
-  // Add all custom properties to the options object
-  for(let p in properties) options[p] = properties[p];
 
-  const chart = new google.visualization.LineChart(document.getElementById('yearly-chart-container'));    
-  chart.draw(data, options);
-}
-
-/** Fetches relative dairy consumption data and uses it to create a chart. */
-async function drawRelativeDairyChart() {
-  const data = createChartDataFromDataset('relativeConsumption');
-  let options = createChartsOptions();
-  
-  let properties = {
+  let relativeConsumptionProperties = {
     title: 'Year-Over-Year Dairy Growth',
     vAxis: { 
       format: 'percent',
@@ -48,11 +46,23 @@ async function drawRelativeDairyChart() {
       ticks: [-0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3]
     }
   };
-  // Add all custom properties to the options object
-  for(let p in properties) options[p] = properties[p];
-
-  const chart = new google.visualization.LineChart(document.getElementById('relative-chart-container'));    
-  chart.draw(data, options);
+  
+  const dairyDataInfo = [
+    {
+      name: 'consumption',
+      properties: consumptionProperties,
+      divName: 'yearly-chart-container'
+    },
+    {
+      name: 'relativeConsumption',
+      properties: relativeConsumptionProperties,
+      divName: 'relative-chart-container'
+    }
+  ];
+  
+  dairyDataInfo.forEach((dataset) => {
+    drawChart(dataset['name'], dataset['properties'], dataset['divName']);
+  });
 }
 
 /** Creates data variable used in chart creation depending on dataset name. */
@@ -76,7 +86,6 @@ function createChartDataFromDataset(datasetName) {
                  dairyYear.flavoredNonwhole, dairyYear.buttermilk,
                  dairyYear.eggnog, dairyYear.totalMilk]);
   });
-
   return data;
 }
 
@@ -113,8 +122,7 @@ function init() {
 
   fetchDairyData()
     .then(() => { 
-      google.charts.setOnLoadCallback(drawDairyChart);
-      google.charts.setOnLoadCallback(drawRelativeDairyChart);
+      google.charts.setOnLoadCallback(createBothDairyCharts);
     });
 }
 
