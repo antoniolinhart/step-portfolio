@@ -15,12 +15,20 @@
 /** Creates a map that shows a single marker. */
 function createMap() {
   const map = new google.maps.Map(document.getElementById('dairy-map'),
-      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+      {center: {lat: 39.826499, lng: -98.580313}, zoom: 4});
 
   const trexMarker = new google.maps.Marker({
     position: {lat: 37.421903, lng: -122.084674},
     map: map,
-    title: 'Stan the T-Rex'
+    title: 'Stan the T-Rex',
+    icon: './images/cow_annotation.png'
+  });
+
+  const trexInfoWindow =
+      new google.maps.InfoWindow({content: 'This is Stan, the T-Rex statue.'});
+
+  trexMarker.addListener('click', function() {
+    trexInfoWindow.open(map, trexMarker);
   });
 }
 
