@@ -12,31 +12,97 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Creates a map that shows a single marker. */
-function createMap() {
-  const map = new google.maps.Map(document.getElementById('dairy-map'),
-      {center: {lat: 39.826499, lng: -98.580313}, zoom: 4});
-
-  const trexMarker = new google.maps.Marker({
-    position: {lat: 37.421903, lng: -122.084674},
-    map: map,
-    title: 'Stan the T-Rex',
-    icon: './images/cow_annotation.png'
+/** Instantiates the location of the map view and zoom level. */
+function instantiateMap() {
+  const geographicalUSCenter = {
+    lat: 39.826499,
+    lng: -98.580313
+  };
+  map = new google.maps.Map(document.getElementById('dairy-map'), {
+    center: geographicalUSCenter,
+    zoom: 4
   });
+}
 
-  const trexInfoWindow =
-      new google.maps.InfoWindow({content: 'This is Stan, the T-Rex statue.'});
+/** Creates a map that shows major US cattle farms. */
+function createCattleFarmMap() {
+  const cowAnnotationFilePath = './images/cow_annotation.png';
+  //let infoWindow = new google.maps.InfoWindow({content: 'Default text.'});
+  cattleFarms.forEach((cFarm) => {
+    const marker = new google.maps.Marker({
+      map: map,
+      position: {
+        lat: cFarm.latitude,
+        lng: cFarm.longitude
+      },
+      title: cFarm.name,
+      icon: cowAnnotationFilePath
+    });
 
-  trexMarker.addListener('click', function() {
-    trexInfoWindow.open(map, trexMarker);
+    let infoWindow = new google.maps.InfoWindow({content: generateMarkerContent(cFarm)});
+    infoWindows.push(infoWindow);
+    
+    marker.addListener('click', function() {
+      // Close info windows so we can ensure there is only 1 visible at a time on the screen
+      closeInfoWindows();
+      infoWindow.open(map, marker);
+    });
   });
+}
+
+/** Closes all info windows so only one displays at a time. */
+function closeInfoWindows() {
+  infoWindows.forEach((window) => {
+    window.close();
+  });
+}
+
+/** Generates the marker DOM content to be displayed when clicking on a map marker. */
+function generateMarkerContent(cattleFarm) {
+  const contentDiv = document.createElement('div');
+
+  // Create header
+  const locationTitle = document.createElement('h1');
+  locationTitle.innerText = cattleFarm.name;
+
+  // Create description
+  const locationDesc = document.createElement('p');
+  locationDesc.innerText = `${cattleFarm.name} is a cattle farm located in ${cattleFarm.city}, ${cattleFarm.state}!`
+
+  // Link related descriptions
+  const link1 = document.createElement('p');
+  link1.innerText = "To learn more, please visit their website!"
+
+  const link2 = document.createElement('a');
+  link2.href = cattleFarm.website;
+  link2.text = cattleFarm.website;
+  link2.target = '_blank';
+
+  contentDiv.appendChild(locationTitle);
+  contentDiv.appendChild(locationDesc);
+  contentDiv.appendChild(linkDiv);
+
+  return contentDiv;
+}
+
+/** Fetch cattle farm data from backend. */
+async function fetchCattleFarms() {
+  const response = await fetch("/cattle-farm-data");
+  cattleFarms = await response.json();
 }
 
 /**
  * Initializes map in dairy analytics webpage.
  */
 function init() {
-  document.getElementById('dairy-map').onload = createMap();
+  fetchCattleFarms()
+  .then(() => {
+    instantiateMap();
+    document.getElementById('dairy-map').onload = createCattleFarmMap();
+  });
 }
 
+let cattleFarms;
+let map;
+let infoWindows = [];
 init();
