@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Antonio's Analytics</title>
-    <link rel="icon" href="Images/favicon.ico" />
     <script defer src="https://www.gstatic.com/charts/loader.js"></script>
-    <script defer src="dairyChartScript.js"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBV9NUZyP2Uj6TGsFWo2ZWbc11AU91BMPU"></script>
+    <link rel="stylesheet" href="dairyStyle.css">
+    <link rel="icon" href="Images/favicon.ico">
   </head>
-  <body>
+  <body id="body-id">
     <h1>Dairy Analytics</h1>
     <div id="yearly-chart-container"></div>
     <div id="relative-chart-container"></div>
+    <div id="dairy-map"></div>
+    <script defer src="dairyChartScript.js"></script>
+    <script defer src="dairyMapScript.js"></script>
   </body>
 </html>

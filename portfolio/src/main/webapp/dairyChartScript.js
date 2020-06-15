@@ -115,7 +115,7 @@ async function fetchDairyData() {
 }
 
 /**
- * Initializes dairy analytics webpage.
+ * Initializes charts in dairy analytics webpage.
  */
 function init() {
   google.charts.load('current', {'packages':['corechart']});
