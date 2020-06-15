@@ -79,7 +79,8 @@ function generateMarkerContent(cattleFarm) {
 
   contentDiv.appendChild(locationTitle);
   contentDiv.appendChild(locationDesc);
-  contentDiv.appendChild(linkDiv);
+  contentDiv.appendChild(link1);
+  contentDiv.appendChild(link2);
 
   return contentDiv;
 }
