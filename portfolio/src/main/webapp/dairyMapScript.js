@@ -27,7 +27,6 @@ function instantiateMap() {
 /** Creates a map that shows major US cattle farms. */
 function createCattleFarmMap() {
   const cowAnnotationFilePath = './images/cow_annotation.png';
-  //let infoWindow = new google.maps.InfoWindow({content: 'Default text.'});
   cattleFarms.forEach((cFarm) => {
     const marker = new google.maps.Marker({
       map: map,
