@@ -1,5 +1,10 @@
 #dairy-map {
   border: thin solid black;
-  height: 400px;
+  height: 500px;
   width: 700px;
+  margin-bottom: 100px;
+}
+
+.info-window-txt {
+  font-size: 1.25em;
 }
