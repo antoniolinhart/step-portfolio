@@ -1,8 +1,5 @@
-This directory is where you'll write all of your code!
+# Antonio Linhart's Portfolio Page
 
-By default it contains a barebones web app. To run a local server, execute this
-command:
+Here is my portfolio page!
 
-```bash
-mvn package appengine:run
-```
+Dataset used in charts comes from the [USDA Dairy Data Page's](https://www.ers.usda.gov/data-products/dairy-data/) "Fluid beverage milk sales quantities by product (Annual)".
