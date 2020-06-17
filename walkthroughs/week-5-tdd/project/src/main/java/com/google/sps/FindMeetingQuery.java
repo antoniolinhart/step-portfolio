@@ -29,46 +29,39 @@ public final class FindMeetingQuery {
     // Needs to have at least 1 attendee at a meeting
     if(request.getAttendees().size() == 0) return Arrays.asList(TimeRange.WHOLE_DAY);
 
-    // The event times are only unavailable if there is a participant from the MeetingRequest at the event
-    List<TimeRange> unavailableTimes = new ArrayList<>();
-    for(Event e : events) {
-      if(doesEventHaveRequiredMeetingAttendee(e.getAttendees(), request.getAttendees())) {
-        unavailableTimes.add(e.getWhen());
-      }
-    }
+    // For a time to be unavailable, there must be someone at the event who is in the meeting attendees list
+    List<TimeRange> unavailableTimes = new ArrayList(convertAttendeesAndEventsToUnavailableTimes(events, request));
 
     // If there are no unavailable times, people can meet any time!
     if(unavailableTimes.size() == 0) return Arrays.asList(TimeRange.WHOLE_DAY);
 
     Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
 
-    Collection<TimeRange> unavailableNoOverlaps = new ArrayList<>();
-    int startTime;
+    Collection<TimeRange> unavailableNoOverlaps = mergeTimeRanges(unavailableTimes);
+
+    Collection<TimeRange> availableTimes = findAvailableTimesFromUnavailableTimes(unavailableNoOverlaps);
+
+    Collection<TimeRange> finalAvailableTimes = removeAllTimeRangesLessThanGivenDuration(availableTimes, request.getDuration());
+
+    return finalAvailableTimes;
+  }
+
+  private static Collection<TimeRange> removeAllTimeRangesLessThanGivenDuration(Collection<TimeRange> times, long duration) {
+    Collection<TimeRange> sufficientTimes = new ArrayList<>(); 
+    for(TimeRange tr : times) {
+      if(tr.duration() >= duration) {
+        sufficientTimes.add(tr);
+      }
+    }
+    return sufficientTimes;
+  }
+
+  private static Collection<TimeRange> findAvailableTimesFromUnavailableTimes(Collection<TimeRange> unavailableTimes) {
+    Collection<TimeRange> availableTimes = new ArrayList<>();
+    int startTime = TimeRange.START_OF_DAY;
     int endTime;
 
-    // Create a new collection that holds non-overlapping time ranges
-    for(int i = 0; i < unavailableTimes.size(); i++) {
-      TimeRange currTimeRange = unavailableTimes.get(i);
-      startTime = currTimeRange.start();
-      endTime = currTimeRange.end();
-
-      for(int j = i; j < unavailableTimes.size(); j++) {
-        TimeRange nextTimeRange = unavailableTimes.get(j);
-        if(currTimeRange.overlaps(nextTimeRange)) {
-          endTime = Math.max(currTimeRange.end(), nextTimeRange.end());
-          i = j;
-        } else {
-          break;
-        }
-      }
-      unavailableNoOverlaps.add(TimeRange.fromStartEnd(startTime, endTime, false));
-    }
-
-    // Use all of the non-overlapping times to generate a list of times that are available through the day
-    Collection<TimeRange> availableTimes = new ArrayList<>();
-    startTime = 0;
-    endTime = 0;
-    for(TimeRange tr : unavailableNoOverlaps) {
+    for(TimeRange tr : unavailableTimes) {
       endTime = tr.start();
       if(startTime != endTime) {
         availableTimes.add(TimeRange.fromStartEnd(startTime, endTime, false));
@@ -81,16 +74,42 @@ public final class FindMeetingQuery {
     if(startTime != endTime) {
       availableTimes.add(TimeRange.fromStartEnd(startTime, endTime, false));
     }
+    return availableTimes;
+  }
 
-    // Ensure that duration of each time range is at least as long as the meeting request
-    Collection<TimeRange> finalTimeAvailability = new ArrayList<>(); 
-    for(TimeRange tr : availableTimes) {
-      if(tr.duration() >= request.getDuration()) {
-        finalTimeAvailability.add(tr);
+  private static Collection<TimeRange> mergeTimeRanges(List<TimeRange> times) {
+    int startTime;
+    int endTime;
+    Collection<TimeRange> mergedTimes = new ArrayList<>();
+
+    for(int i = 0; i < times.size(); i++) {
+      TimeRange currTimeRange = times.get(i);
+      startTime = currTimeRange.start();
+      endTime = currTimeRange.end();
+
+      for(int j = i; j < times.size(); j++) {
+        TimeRange nextTimeRange = times.get(j);
+        if(currTimeRange.overlaps(nextTimeRange)) {
+          endTime = Math.max(currTimeRange.end(), nextTimeRange.end());
+          i = j;
+        } else {
+          break;
+        }
+      }
+      mergedTimes.add(TimeRange.fromStartEnd(startTime, endTime, false));
+    }
+    return mergedTimes;
+  }
+
+  private static Collection<TimeRange> convertAttendeesAndEventsToUnavailableTimes(Collection<Event> events, MeetingRequest request) {
+    // The event times are only unavailable if there is a participant from the MeetingRequest at the event
+    List<TimeRange> unavailableTimes = new ArrayList<>();
+    for(Event e : events) {
+      if(doesEventHaveRequiredMeetingAttendee(e.getAttendees(), request.getAttendees())) {
+        unavailableTimes.add(e.getWhen());
       }
     }
-
-    return finalTimeAvailability;
+    return unavailableTimes;
   }
 
   private static boolean doesEventHaveRequiredMeetingAttendee(Collection<String> eventAttendees, Collection<String> reqAttendees) {
