@@ -29,7 +29,7 @@ function generateRandomColor() {
   * Changes the background of the page to be a random color.
   */
 function setRandomBackgroundColor() {
-  const bodyContainer = document.getElementById('main-body');
+  const bodyContainer = document.getElementsByTagName('body')[0];
   bodyContainer.style.backgroundColor = generateRandomColor();
 }
 

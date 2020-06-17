@@ -6,15 +6,47 @@
     <title>Antonio's Analytics</title>
     <script defer src="https://www.gstatic.com/charts/loader.js"></script>
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBV9NUZyP2Uj6TGsFWo2ZWbc11AU91BMPU"></script>
-    <link rel="stylesheet" href="dairyStyle.css">
-    <link rel="icon" href="Images/favicon.ico">
-  </head>
-  <body id="body-id">
-    <h1>Dairy Analytics</h1>
-    <div id="yearly-chart-container"></div>
-    <div id="relative-chart-container"></div>
-    <div id="dairy-map"></div>
     <script defer src="dairyChartScript.js"></script>
     <script defer src="dairyMapScript.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dairyStyle.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.ico">
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-primary navbar-extend-lg">
+      <ul class="nav navbar-nav navbar-left">
+        <li><a class="nav-text navbar-brand" href="/index.html"><span class="text-emphasis">Antonio</span>'s Analytics</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a class="nav-text" href="/index.html#introduction">Introduction</a></li>
+        <li><a class="nav-text" href="/index.html#experience">Experience</a></li>
+        <li><a class="nav-text" href="/index.html#skills">Skills</a></li>
+        <li><a class="nav-text" href="/index.html#comments">Comments</a></li>
+        <li><a class="nav-text" href="/dairy.html">Dairy Analytics</a></li>
+      </ul>
+    </nav>
+    <div id="content">
+      <p>
+        One of my interests is analytics and visualizing data, so I used the Google Charts and Maps API to display
+        some interesting data about dairy products and the largest cattle farms in the United States which I found 
+        on the USDA website!
+      </p>
+      <p>
+        I am not personally fond of milk, but I thought it would be interesting to plot this data and potentaially find
+        a trend following the 'Got Milk?' campaign that started in 1993. It does appear that skim milk consumption
+        increased in the few years after, but the other kinds of milk consumption decreased. Also, in the year-over-year
+        chart, it shows some pretty large changes in flavored whole milk between years which I found very interesting in
+        comparison to other types of dairy products.
+      </p>
+      <p>
+        In the future, I am looking forward to doing more data analysis like this!
+      </p>
+      <h3>Dairy Consumption from 1975 to 2018</h3>
+      <div id="yearly-chart-container"></div>
+      <div id="relative-chart-container"></div>
+      <h3>Top 7 Cattle Farms in the United States</h3>
+      <div id="dairy-map"></div>
+    </div>
   </body>
 </html>

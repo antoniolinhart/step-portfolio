@@ -63,14 +63,17 @@ function generateMarkerContent(cattleFarm) {
   // Create header
   const locationTitle = document.createElement('h1');
   locationTitle.innerText = cattleFarm.name;
+  locationTitle.className = 'info-window-txt';
 
   // Create description
   const locationDesc = document.createElement('p');
   locationDesc.innerText = `${cattleFarm.name} is a cattle farm located in ${cattleFarm.city}, ${cattleFarm.state}!`
+  locationDesc.className = 'info-window-txt';
 
   // Link related descriptions
   const link1 = document.createElement('p');
   link1.innerText = "To learn more, please visit their website!"
+  link1.className = 'info-window-txt';
 
   const link2 = document.createElement('a');
   link2.href = cattleFarm.website;
@@ -79,7 +82,8 @@ function generateMarkerContent(cattleFarm) {
 
   contentDiv.appendChild(locationTitle);
   contentDiv.appendChild(locationDesc);
-  contentDiv.appendChild(linkDiv);
+  contentDiv.appendChild(link1);
+  contentDiv.appendChild(link2);
 
   return contentDiv;
 }
