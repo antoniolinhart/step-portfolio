@@ -2,4 +2,4 @@
 
 This repo contains **Antonio Linhart**'s portfolio and STEP projects.
 
-Check back soon for updates!
+Here is a direct link to the website: http://antoniolinhart.appspot.com/
